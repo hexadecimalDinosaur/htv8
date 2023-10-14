@@ -1,0 +1,13 @@
+---
+- name:
+  hosts: aws
+  become: true
+  tasks:
+  - name: Update apt
+    ansible.builtin.package:
+      upgrade: yes
+      update_cache: yes
+  - name: Install nginx
+    ansible.builtin.package:
+      name: nginx
+      state: present
