@@ -5,9 +5,16 @@
   tasks:
   - name: Update apt
     ansible.builtin.package:
-      upgrade: yes
-      update_cache: yes
+      upgrade: true
+      update_cache: true
   - name: Install nginx
     ansible.builtin.package:
       name: nginx
       state: present
+    notify: Reload nginx
+  handlers:
+  - name: Reload nginx
+    ansible.builtin.service:
+      name: nginx
+      state: reloaded
+      enabled: true

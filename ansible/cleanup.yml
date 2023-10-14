@@ -8,4 +8,4 @@
       name: nginx
       state: absent
       purge: true
-      autoremove: yes
+      autoremove: true
