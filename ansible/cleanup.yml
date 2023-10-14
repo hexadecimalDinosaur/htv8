@@ -3,9 +3,9 @@
   hosts: aws
   become: true
   tasks:
-  - name: Remove nginx
-    ansible.builtin.package:
-      name: nginx
-      state: absent
-      purge: true
-      autoremove: true
+    - name: Remove nginx
+      ansible.builtin.package:
+        name: nginx
+        state: absent
+        purge: true
+        autoremove: true

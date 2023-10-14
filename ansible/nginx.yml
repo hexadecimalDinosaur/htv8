@@ -3,18 +3,31 @@
   hosts: aws
   become: true
   tasks:
-  - name: Update apt
-    ansible.builtin.package:
-      upgrade: true
-      update_cache: true
-  - name: Install nginx
-    ansible.builtin.package:
-      name: nginx
-      state: present
-    notify: Reload nginx
+    - name: Update apt
+      ansible.builtin.package:
+        upgrade: true
+        update_cache: true
+    - name: Install nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+      notify: Reload nginx
+    - name: Copy nginx config
+      ansible.builtin.copy:
+        src: nginx.conf
+        dest: /etc/nginx/sites-enabled/aws # this should be the project name
+        mode: '644'
+      notify: Reload nginx config
+    - name: Unlink default nginx
+      ansible.builtin.command:
+        cmd: unlink /etc/nginx/sites-enabled/default
+      notify: Reload nginx config
   handlers:
-  - name: Reload nginx
-    ansible.builtin.service:
-      name: nginx
-      state: reloaded
-      enabled: true
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+        enabled: true
+    - name: Reload nginx config
+      ansible.builtin.command:
+        cmd: nginx -s reload
