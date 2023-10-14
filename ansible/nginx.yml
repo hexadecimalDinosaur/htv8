@@ -1,7 +1,11 @@
 ---
-- name:
-  hosts: {{project_name}}
+- name: Nginx playbook
+  hosts: webserver
   become: true
+  pre_tasks:
+    - name: Load variables
+      ansible.builtin.include_vars:
+        file: vars.yml
   tasks:
     - name: Update apt
       ansible.builtin.package:
