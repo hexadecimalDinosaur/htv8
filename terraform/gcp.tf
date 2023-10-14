@@ -5,7 +5,6 @@ terraform {
             version = "4.51.0"
         }
     }
-    required_version = "1.6.1"
 }
 
 provider "google" {
@@ -43,8 +42,8 @@ resource "google_compute_instance" "project_webserver" {
       subnetwork = google_compute_subnetwork.project_subnet.name
       access_config {}
     }
-    metadata {
-        ssh-keys = "admin:" + file("pub_key")
+    metadata = {
+        ssh-keys = "admin:${file("pub_key")}"
     }
 }
 
