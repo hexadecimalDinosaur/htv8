@@ -1,0 +1,11 @@
+---
+- name:
+  hosts: {{project_name}}
+  become: true
+  tasks:
+    - name: Remove nginx
+      ansible.builtin.package:
+        name: nginx
+        state: absent
+        purge: true
+        autoremove: true
