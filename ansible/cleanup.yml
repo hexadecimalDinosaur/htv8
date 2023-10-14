@@ -1,6 +1,6 @@
 ---
 - name:
-  hosts: aws
+  hosts: {{project_name}}
   become: true
   tasks:
     - name: Remove nginx
