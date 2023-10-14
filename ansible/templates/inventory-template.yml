@@ -1,6 +1,6 @@
 ---
 {{project_name}}:
   hosts:
-    {{project_name}}-webserver:
+    webserver:
       ansible_user: {{webserver_user}}
       ansible_host: {{webserver_ip}}
