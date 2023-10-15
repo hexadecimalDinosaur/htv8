@@ -49,7 +49,7 @@ def deploy_form():
 
 @app.route('/usage/')
 def usage():
-    return render_template("base.html")
+    return render_template("usage.html")
 
 if __name__ == "__main__":
     app.run()

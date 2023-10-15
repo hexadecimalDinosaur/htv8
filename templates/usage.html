@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Usage{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<!--- This usage.md stores the instructions for bundle.zip, put through md to html parser --->
+<h2 id="deploy-my-hack-usage">Deploy My Hack usage</h2>
+<ol type="1">
+<li>Extract the downloaded bundle containing deployment scripts</li>
+</ol>
+<p>unzip the contents of bundle.zip to your project directory. It should look something like this:</p>
+<pre><code>action-testing/
+├── app.py
+├── .github
+│   └── workflows
+│       └── deploy_bundle.yml
+└── deploy_bundle
+│   ├── README.md
+│   ├── ansible.cfg
+│   ├── ansible.py
+│   ├── cleanup.yml
+│   ├── flaskapp.conf
+│   ├── nginx.conf
+│   ├── nginx.yml
+│   ├── resources.tf
+│   ├── tasks
+│   │   └── python.yml
+│   └── templates
+│       ├── inventory-template.yml
+│       └── vars-template.yml
+├── static
+│   └── ...
+├── templates
+│   └── ...
+└── other_project_files
+    └── ...</code></pre>
+<ol start="2" type="1">
+<li>Commit the <code>.github/workflows</code> and <code>deploy_bundle</code> folders to your repository</li>
+</ol>
+<pre><code>git add . 
+git commit -m &quot;Add auto-deploy scripts&quot;
+git push</code></pre>
+<ol start="3" type="1">
+<li>Save Google Cloud Platform credentials to GitHub secrets</li>
+</ol>
+<p><a href="GitHub%20documentation%20for%20creating%20secrets">https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions</a></p>
+<ol start="4" type="1">
+<li>Done!</li>
+</ol>
+<p>On pushes to your branches, the GitHub action will run and deploy your changes. You can see the runs in the “Actions” tab in your repository.</p>
+{% endblock %}
