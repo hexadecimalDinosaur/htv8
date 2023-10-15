@@ -7,12 +7,7 @@
 - name: Copy project files to host
   ansible.builtin.copy:
     dest: /home/admin/app/
-    src: ../../requirements.txt
-    mode: "555"
-- name: Copy app.py to host
-  ansible.builtin.copy:
-    dest: /home/admin/app/
-    src: ../../app.py
+    src: ../../
     mode: "555"
 - name: Install venv requirements
   ansible.builtin.package:
