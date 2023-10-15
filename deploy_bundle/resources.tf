@@ -58,7 +58,7 @@ resource "google_compute_instance" "project_webserver" {
     machine_type = "e2-micro"
     boot_disk {
       initialize_params {
-        image = "projects/debian-cloud/global/images/debian-12-bookworm-v20231010"
+        image = "projects/debian-cloud/global/images/debian-11-bullseye-v20231010"
       }
     }
     network_interface {
