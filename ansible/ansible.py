@@ -14,8 +14,8 @@ ip = ""
 
 for resource in state["resources"]:
     if resource["type"] == "google_compute_instance" and resource["name"] == "project_webserver":
-        ip = resource["instances"][0]["network_interface"]["access_config"]["nat_ip"]
-        name = resource["instances"][0]["name"][:-len("-webserver")]
+        ip = resource["instances"][0]["attributes"]["network_interface"][0]["access_config"][0]["nat_ip"]
+        name = resource["instances"][0]["attributes"]["name"][:-len("-webserver")]
 
 env = Environment(
     loader=FileSystemLoader('templates'),
@@ -33,8 +33,7 @@ var = env.get_template("vars-template.yml")
 var_output = var.render(
     project_name=name,
     webserver_user=user,
-    webserver_ip=ip,
-    project_language=language
+    webserver_ip=ip
 )
 
 with open ("inventory.yml", "w+") as inv_file:
