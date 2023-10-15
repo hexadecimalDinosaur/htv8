@@ -46,5 +46,6 @@ jobs:
           python3 ansible.py
       - name: Run Ansible Playbook
         run: |
+          rm -rf .git
           cd deploy_bundle
           ansible-playbook nginx.yml

@@ -9,10 +9,11 @@
     dest: /home/admin/app/
     src: ../../
     mode: "555"
+    owner: admin
 - name: Install venv requirements
   ansible.builtin.package:
     name:
-      - virtualenv
+      - python3-venv
       - python3-pip
       - python3-setuptools
     state: present
@@ -42,6 +43,7 @@
     dest: /etc/supervisor/conf.d/flaskapp.conf
     src: ../flaskapp.conf
     mode: "644"
+    owner: admin
   notify: Reload supervisor
 - name: Create supervisor log dir
   ansible.builtin.file:
