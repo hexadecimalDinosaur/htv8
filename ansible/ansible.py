@@ -3,11 +3,19 @@
 # Rendered files will be written to the current directory
 
 from re import template
+import json
 from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
 
+state = json.load(open("terraform.tfstate", "r"))
+
 name = ""
-user = ""
+user = "admin"
 ip = ""
+
+for resource in state["resources"]:
+    if resource["type"] == "google_compute_instance" and resource["name"] == "project_webserver":
+        ip = resource["instances"][0]["network_interface"]["access_config"]["nat_ip"]
+        name = resource["instances"][0]["name"][:-len("-webserver")]
 
 env = Environment(
     loader=FileSystemLoader('templates'),
