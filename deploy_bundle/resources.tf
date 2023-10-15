@@ -11,7 +11,7 @@ provider "google" {
     credentials = file("gcp_creds.json")
     project = "omega-presence-402013"
     region = "northamerica-northeast2"
-    zone = "northamerica-northeast2"
+    zone = "northamerica-northeast2-a"
 }
 
 resource "google_compute_network" "project_vpc" {
