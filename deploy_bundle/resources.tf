@@ -10,8 +10,8 @@ terraform {
 provider "google" {
     credentials = file("gcp_creds.json")
     project = "omega-presence-402013"
-    region = ""
-    zone = ""
+    region = "northamerica-northeast2"
+    zone = "northamerica-northeast2"
 }
 
 resource "google_compute_network" "project_vpc" {
@@ -23,7 +23,7 @@ resource "google_compute_subnetwork" "project_subnet" {
     network = google_compute_network.project_vpc.name
     name = "infrabundle-pub-subnet"
     ip_cidr_range = "10.0.1.0/24"
-    region = ""
+    region = "northamerica-northeast2"
 }
 
 
@@ -55,7 +55,7 @@ resource "google_compute_network_firewall_policy_rule" "ssh-http" {
 
 resource "google_compute_instance" "project_webserver" {
     name = "infrabundle-webserver"
-    machine_type = ""
+    machine_type = "e2-micro"
     boot_disk {
       initialize_params {
         image = "projects/debian-cloud/global/images/debian-12-bookworm-v20231010"
