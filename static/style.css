@@ -27,6 +27,7 @@ nav > ul > li {
     flex-direction: column;
 }
 
-#deploy-form > label {
+#deploy-form > label, .form-checkbox {
     margin-top: 1rem;
 }
+
