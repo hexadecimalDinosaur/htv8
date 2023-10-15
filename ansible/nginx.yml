@@ -7,10 +7,6 @@
       ansible.builtin.include_vars:
         file: vars.yml
   tasks:
-    - name: Update apt
-      ansible.builtin.package:
-        upgrade: true
-        update_cache: true
     - name: Install nginx
       ansible.builtin.package:
         name: nginx
