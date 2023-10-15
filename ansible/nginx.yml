@@ -25,7 +25,12 @@
     - name: Unlink default nginx
       ansible.builtin.command:
         cmd: unlink /etc/nginx/sites-enabled/default
+        removes: /etc/nginx/sites-enabled/default
       notify: Reload nginx config
+    - name: Import Python tasks
+      ansible.builtin.include_tasks:
+        file: tasks/python.yml
+      when: project_language == 'python'
   handlers:
     - name: Reload nginx
       ansible.builtin.service:
@@ -35,3 +40,8 @@
     - name: Reload nginx config
       ansible.builtin.command:
         cmd: nginx -s reload
+    - name: Reload supervisor
+      ansible.builtin.service:
+        name: supervisor
+        state: reloaded
+        enabled: true

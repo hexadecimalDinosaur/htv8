@@ -25,7 +25,8 @@ var = env.get_template("vars-template.yml")
 var_output = var.render(
     project_name=name,
     webserver_user=user,
-    webserver_ip=ip
+    webserver_ip=ip,
+    project_language=language
 )
 
 with open ("inventory.yml", "w+") as inv_file:

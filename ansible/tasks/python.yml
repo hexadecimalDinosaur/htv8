@@ -1,0 +1,42 @@
+# tasks to deploy Python stack
+- name: Get Python Version
+  ansible.builtin.command:
+    cmd: which python3
+  changed_when: false
+  register: python_version
+- name: Copy project files to host
+  ansible.builtin.copy:
+    dest: /home/admin/app/
+    src: ../../requirements.txt
+- name: Copy app.py to host 
+  ansible.builtin.copy:
+    dest: /home/admin/app/
+    src: ../../app.py
+- name: Install venv requirements
+  ansible.builtin.package:
+    name:
+      - virtualenv
+      - python3-pip
+      - python3-setuptools
+    state: present
+- name: Create venv and install requirements
+  ansible.builtin.pip:
+    requirements: /home/admin/app/requirements.txt # TODO: verify this requirements
+    virtualenv: /home/admin/app/env
+    virtualenv_command: "{{ python_version.stdout }} -m venv"
+- name: Get pip list
+  ansible.builtin.shell:
+    cmd: . /home/admin/app/env/bin/activate && pip list
+  register: pip
+- name: Check pip list
+  ansible.builtin.debug:
+    msg: "{{ pip }}"
+- name: Install gunicorn
+  ansible.builtin.pip:
+    name: gunicorn
+    virtualenv: /home/admin/app/env
+- name: Install supervisor
+  ansible.builtin.package:
+    name: supervisor
+    state: present
+  notify: Reload supervisor
