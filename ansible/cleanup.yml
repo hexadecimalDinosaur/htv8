@@ -13,3 +13,9 @@
         state: absent
         purge: true
         autoremove: true
+    - name: Remove supervisor
+      ansible.builtin.package:
+        name: supervisor
+        state: absent
+        purge: true
+        autoremove: true
