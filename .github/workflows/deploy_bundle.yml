@@ -1,5 +1,8 @@
 name: Deploy Bundle
-on: [push]
+on:
+  push:
+    branches:
+      - main
 permissions:
   contents: write
 
@@ -49,4 +52,3 @@ jobs:
           rm -rf .git
           cd deploy_bundle
           ansible-playbook nginx.yml
-
