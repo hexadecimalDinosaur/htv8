@@ -26,7 +26,31 @@ resource "google_compute_subnetwork" "project_subnet" {
     region = "{{ gcp_region }}"
 }
 
-data "google_client_openid_userinfo" "me" {
+
+resource "google_compute_network_firewall_policy" "project_vpc_fw" {
+    name = "{{ project_name }}-vpc-fw"
+}
+
+resource "google_compute_network_firewall_policy_association" "project_vpc_fw_association" {
+    name = "association"
+    attachment_target = google_compute_network.project_vpc.id
+    firewall_policy = google_compute_network_firewall_policy.project_vpc_fw.name
+}
+
+resource "google_compute_network_firewall_policy_rule" "ssh-http" {
+    rule_name = "ssh-http"
+    action = "allow"
+    direction = "INGRESS"
+    disabled = false
+    firewall_policy = google_compute_network_firewall_policy.project_vpc_fw.name
+    priority = 65534
+    match {
+      src_ip_ranges = ["0.0.0.0/0"]
+      layer4_configs {
+        ip_protocol = "tcp"
+        ports = [22, 80, 443]
+      }
+    }
 }
 
 resource "google_compute_instance" "project_webserver" {
