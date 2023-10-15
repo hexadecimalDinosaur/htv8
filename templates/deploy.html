@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Deploy{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" id="deploy-form" action="/gen_bundle/">
+    <label for="project-name">Project Name</label>
+    <input name="project_name" id="project-name" required>
+    <label for="gcp-project-id">GCP Project ID</label>
+    <input name="gcp_project_id" id="gcp-project-id" required>
+    <label for="gcp-region">GCP Region</label>
+    <input name="gcp_region" id="gcp-region" required>
+    <label for="gcp-project-id">GCP Project ID</label>
+    <input name="gcp_project_id" id="gcp-project-id" required>
+    <button type="submit" value="Submit" >Submit</button>
+  </form>
+{% endblock %}

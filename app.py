@@ -5,12 +5,15 @@ import tempfile
 import zipfile
 import os
 import shutil
+import json
 
 app = Flask(__name__)
 
-@app.route('/gen_bundle/', methods=['GET'])
+@app.route('/gen_bundle/', methods=['POST'])
 def generate_bundle_request():
-    payload: dict = request.get_json()
+    #payload: dict = jsonify (request.form)
+    payload: dict = json.dumps(request.form)
+    payload = json.loads(payload)
 
     if "project_name" not in payload:
         abort(400)
@@ -35,6 +38,18 @@ def generate_bundle_request():
     shutil.make_archive(f"{zip_path}/bundle", 'zip', tempdir)
 
     return send_file(f"{zip_path}/bundle.zip")
+
+@app.route('/')
+def home():
+    return render_template("index.html")
+
+@app.route('/deploy/')
+def deploy_form():
+    return render_template("deploy.html")
+
+@app.route('/usage/')
+def usage():
+    return render_template("base.html")
 
 if __name__ == "__main__":
     app.run()
