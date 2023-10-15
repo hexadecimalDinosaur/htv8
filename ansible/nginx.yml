@@ -19,7 +19,7 @@
     - name: Copy nginx config
       ansible.builtin.copy:
         src: nginx.conf
-        dest: /etc/nginx/sites-enabled/aws # this should be the project name
+        dest: "/etc/nginx/sites-enabled/{{ project_name }}"
         mode: '644'
       notify: Reload nginx config
     - name: Unlink default nginx
