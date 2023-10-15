@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Deploy{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" id="deploy-form" action="/gen_bundle/">
+    <label for="project-name">Project Name</label>
+    <input name="project_name" id="project-name" required>
+    <label for="gcp-project-id">GCP Project ID</label>
+    <input name="gcp_project_id" id="gcp-project-id" required>
+    <label for="gcp-region">GCP Region</label>
+    <input name="gcp_region" id="gcp-region" placeholder="northamerica-northeast2">
+    <label for="gcp-zone">GCP Zone</label>
+    <input name="gcp_zone" id="gcp-zone" placeholder="northamerica-northeast2-a">
+    <label for="compute_type">Compute Type</label>
+    ec-micro, c3-standard-4, etc
+    <input name="compute_type" id="compute-type" placeholder="e2-micro">
+    <div class="form-checkbox">
+        <input name="managed_db" id="managed-id" type="checkbox">
+        <label for="managed_db">Managed Database</label>
+    </div>
+        This project needs a managed database (GCP SQL)
+    <button type="submit" value="Submit" >Submit</button>
+  </form>
+{% endblock %}
