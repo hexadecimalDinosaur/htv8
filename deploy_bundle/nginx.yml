@@ -1,41 +1,47 @@
 ---
+
 - name: Nginx playbook
   hosts: webserver
   become: true
+  gather_facts: no
   pre_tasks:
     - name: Load variables
       ansible.builtin.include_vars:
         file: vars.yml
+    - name: Connection Wait
+      ansible.builtin.wait_for_connection:
+        timeout: 300
   tasks:
     - name: Install nginx
       ansible.builtin.package:
         name: nginx
         state: present
-      notify: Reload nginx
+      notify: Restart nginx
     - name: Copy nginx config
       ansible.builtin.copy:
         src: nginx.conf
         dest: "/etc/nginx/sites-enabled/{{ project_name }}"
         mode: '644'
-      notify: Reload nginx config
     - name: Unlink default nginx
       ansible.builtin.command:
         cmd: unlink /etc/nginx/sites-enabled/default
         removes: /etc/nginx/sites-enabled/default
-      notify: Reload nginx config
+      notify: Restart nginx
     - name: Import Python tasks
       ansible.builtin.include_tasks:
         file: tasks/python.yml
       when: project_language == 'python'
-  handlers:
-    - name: Reload nginx
+    - name: Restart nginx server
       ansible.builtin.service:
         name: nginx
-        state: reloaded
+        state: restarted
         enabled: true
-    - name: Reload nginx config
-      ansible.builtin.command:
-        cmd: nginx -s reload
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+        enabled: true
     - name: Reload supervisor
       ansible.builtin.service:
         name: supervisor
