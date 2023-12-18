@@ -85,6 +85,7 @@ data "aws_ami" "debian" {
 resource "aws_instance" "project_webserver" {
   ami           = data.aws_ami.debian.id
   instance_type = "t2.micro"
+  subnet_id     = aws_subnet.project_pub_subnet.id
   key_name      = "deployer-key"
 }
 
